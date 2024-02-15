@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css'
 
 interface Todo {
   _id: string;
@@ -7,14 +8,12 @@ interface Todo {
   completed: boolean;
 }
 
-
-
 const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState('');
 
   useEffect(() => {
-    axios.get<Todo[]>('/api/todos')
+    axios.get<Todo[]>('http://localhost:5000/api/todos')
       .then((res) => {
         console.log('Todos fetched:', res.data);
         setTodos(res.data);
@@ -38,21 +37,36 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Todo App</h1>
-      <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={addTodo}>Add Todo</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo._id}>
-            <input type="checkbox" checked={todo.completed} readOnly />
-            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+    <div className="App">
+    <h1>Todo App</h1>
+    <input
+      type="text"
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+      className="todo-input"
+    />
+    <button onClick={addTodo} className="add-todo-button">
+      Add Todo
+    </button>
+    <ul>
+      {Array.isArray(todos) &&
+        todos.map((todo) => (
+          <li key={todo._id} className="todo-item">
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              readOnly
+              className="todo-checkbox"
+            />
+            <span
+              className={`todo-text ${todo.completed ? 'completed' : ''}`}
+            >
               {todo.text}
             </span>
           </li>
         ))}
-      </ul>
-    </div>
+    </ul>
+  </div>
   );
 };
 

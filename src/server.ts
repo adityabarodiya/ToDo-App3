@@ -1,10 +1,14 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors'; // Import the cors package
+
 
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use(cors()); // Use the cors middleware
+
 
 mongoose.connect('mongodb+srv://adityabarodiya:xJgDIkvrklyd04Mt@cluster0.m6xjsds.mongodb.net/todoApp3', {
   useNewUrlParser: true,
