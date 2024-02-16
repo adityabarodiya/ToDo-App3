@@ -32,7 +32,7 @@ const App: React.FC = () => {
       setTodos(res.data);
     } catch (error) {
       console.error('Error fetching todos after adding new todo:', error);
-      // Handle the error, e.g., show a message to the user
+      
     }
   };
 
